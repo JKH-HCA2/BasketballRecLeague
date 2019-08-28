@@ -1,0 +1,22 @@
+[
+	{
+		"Name": "Division One",
+		"Code": "D1",
+		"Description": "This league consists of the most highly competitive participants"
+	},
+	{
+		"Name": "Division Two",
+		"Code": "D2",
+		"Description": "This league consists of teams who are mostly competitive"
+    },
+    {
+		"Name": "Division Three",
+		"Code": "D3",
+		"Description": "This league consists of teams who want to balance competition and fun"
+	},
+	{
+		"Name": "Division Four",
+		"Code": "D4",
+		"Description": "This league consists teams that want to have fun"
+	}
+]
