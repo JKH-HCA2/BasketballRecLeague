@@ -43,7 +43,7 @@
 	{
 		"TeamId": 2,
 		"TeamName": "Lakers",
-		"League": "Divison Two",
+		"League": "Division Two",
 		"ManagerName": "Frank Vogel",
 		"ManagerPhone": "555-000-0004",
 		"ManagerEmail": "fvogel22@aol.com",
@@ -75,7 +75,7 @@
     {
 		"TeamId": 3,
 		"TeamName": "Rockets",
-		"League": "Divison Two",
+		"League": "Division Two",
 		"ManagerName": "Mike D'Antoni",
 		"ManagerPhone": "555-000-0007",
 		"ManagerEmail": "miked@aol.com",
