@@ -17,19 +17,9 @@ function getFilter()
         buildTableFrame();    
         $.getJSON("/api/teams", teams => {            
             $.each(teams, (index, team) => {
-                let str = 
-                   `<tr>
-                        <td>${team.TeamName}</td>
-                        <td>${team.League}</td>
-                        <td>${team.Members.length}</td>
-                        <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
-                        </td>                        
-                        <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
-                        </td>
-                    </tr>`
-                $("#tableBody").append(str)
-                addRegBtn();
+                getTableBody(team)                
             })
+            addRegBtn();
         })
     }
     // Secondary dropdown frame is dynamically created if the user *Doesn't* select 'View All'
@@ -101,9 +91,11 @@ function getDataByLeague()
     $("#dataTable").remove();
     buildTableFrame();
     $.getJSON("/api/teams/byleague/" + selected, teams => {
-        getTableBody(teams)
-    })
-    
+        $.each(teams, (index, team) => {
+            getTableBody(team)
+        });
+        addRegBtn();
+    })    
 }
 
 function getDataByTeam()
@@ -113,18 +105,9 @@ function getDataByTeam()
     $("#dataTable").remove();
     buildTableFrame();
     $.getJSON("/api/teams/" + selected, team => {
-        let str =         `<tr>
-                        <td>${team.TeamName}</td>
-                        <td>${team.League}</td>
-                        <td>${team.Members.length}</td>
-                        <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
-                        </td>                        
-                        <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
-                        </td>
-                    </tr>`;
-        $("#tableBody").append(str);
-        addRegBtn();
+        getTableBody(team)        
     })
+    addRegBtn();
 }
 
 function getDataByMems()
@@ -137,17 +120,7 @@ function getDataByMems()
         $.each(teams, (index, team) => {
             if (team.Members.length == selected)
             {
-                let str = 
-                        `<tr>
-                            <td>${team.TeamName}</td>
-                            <td>${team.League}</td>
-                            <td>${team.Members.length}</td>
-                            <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
-                            </td>                        
-                            <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
-                            </td>
-                        </tr>`;
-                $("#tableBody").append(str);                
+                getTableBody(team);              
             }            
         })
         addRegBtn();
@@ -173,11 +146,9 @@ function buildTableFrame()
     $("#tableContainer").append(tableFrame)
 }
 
-function getTableBody(teams)
+function getTableBody(team)
 {
-    let str;
-    $.each(teams, (index, team) => {
-      str =         `<tr>
+    let str =         `<tr>
                         <td>${team.TeamName}</td>
                         <td>${team.League}</td>
                         <td>${team.Members.length}</td>
@@ -186,9 +157,7 @@ function getTableBody(teams)
                         <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
                         </td>
                     </tr>`;
-      $("#tableBody").append(str);
-    });
-    addRegBtn();
+    $("#tableBody").append(str);
 }
 
 
