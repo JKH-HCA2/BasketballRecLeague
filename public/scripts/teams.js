@@ -11,6 +11,8 @@ function getFilter()
     $("#searchFilter").remove();
     $("#dataTable").remove();
     let selected = $("#searchBy").val();
+
+    // Table generation if user selects 'View All'
     if (selected == "All") {
         buildTableFrame();    
         $.getJSON("/api/teams", teams => {            
@@ -19,8 +21,9 @@ function getFilter()
                    `<tr>
                         <td>${team.TeamName}</td>
                         <td>${team.League}</td>
+                        <td>${team.Members.length}</td>
                         <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
-                        </td>
+                        </td>                        
                         <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
                         </td>
                     </tr>`
@@ -29,6 +32,7 @@ function getFilter()
             })
         })
     }
+    // Secondary dropdown frame is dynamically created if the user *Doesn't* select 'View All'
     else {
         let str = `<div id="searchFilter">
                         <label for="filter">${selected}:</label>
@@ -40,8 +44,8 @@ function getFilter()
     }
     
 
-    // Table Display if the user searches by 'League'
-    if (selected == "Leagues")
+    // Dropdown populates if the user searches by 'League'
+    if (selected == "League")
     {
         $("#filter").on("change", getDataByLeague)
         $.getJSON("/api/leagues", leagues => {
@@ -55,33 +59,40 @@ function getFilter()
         });
     }
     
-    $.getJSON("/api/teams", teams => {
-        $.each(teams, (index, team) => {
-            if ($("#searchBy").val() == "Teams")
-            {
-                $("#filter").append(
-                    $("<option />")
-                        .text(team.TeamName)
-                        .attr("value", team.TeamId)
-                )
-            }
+    // Dropdown populates if the user searches by 'Team'
+    if (selected == "Team")
+    {
+        $("#filter").on("change", getDataByTeam)
+        $.getJSON("/api/teams", teams => {
+            $.each(teams, (index, team) => {
+                if ($("#searchBy").val() == "Team")
+                {
+                    $("#filter").append(
+                        $("<option />")
+                            .text(team.TeamName)
+                            .attr("value", team.TeamId)
+                    )
+                }
+            })
         })
-    })
+    }
 
     if ($("#searchBy").val() == "Number of Members")
     {
+        $("#filter").on("change", getDataByMems)
         for (let i = 0; i < 8; i++)
         {
             $("#filter").append(
                 $("<option />")
                     .text(i)
-                    .attr("value", (i))
+                    .attr("value", i)
             )
         }
     }
     
 }
 
+// Helper function that dynamically creates the table when the user filters by 'League'
 function getDataByLeague()
 {
 
@@ -90,10 +101,19 @@ function getDataByLeague()
     $("#dataTable").remove();
     buildTableFrame();
     $.getJSON("/api/teams/byleague/" + selected, teams => {
-        let str;
-        $.each(teams, (index, team) => {
-            str = 
-                   `<tr>
+        getTableBody(teams)
+    })
+    
+}
+
+function getDataByTeam()
+{
+    let selected = $("#filter").val();
+
+    $("#dataTable").remove();
+    buildTableFrame();
+    $.getJSON("/api/teams/" + selected, team => {
+        let str =         `<tr>
                         <td>${team.TeamName}</td>
                         <td>${team.League}</td>
                         <td>${team.Members.length}</td>
@@ -101,14 +121,40 @@ function getDataByLeague()
                         </td>                        
                         <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
                         </td>
-                    </tr>`
-            $("#tableBody").append(str)
+                    </tr>`;
+        $("#tableBody").append(str);
+        addRegBtn();
+    })
+}
+
+function getDataByMems()
+{
+    let selected = $("#filter").val();
+
+    $("#dataTable").remove();
+    buildTableFrame();
+    $.getJSON("/api/teams", teams => {
+        $.each(teams, (index, team) => {
+            if (team.Members.length == selected)
+            {
+                let str = 
+                        `<tr>
+                            <td>${team.TeamName}</td>
+                            <td>${team.League}</td>
+                            <td>${team.Members.length}</td>
+                            <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
+                            </td>                        
+                            <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
+                            </td>
+                        </tr>`;
+                $("#tableBody").append(str);                
+            }            
         })
         addRegBtn();
     })
-    
 }
 
+// Helper function that builds the table, table header, and table body
 function buildTableFrame()
 {
     let tableFrame = `<table class='table text-center table-hover table-bordered mt-5' id='dataTable'>
@@ -127,6 +173,26 @@ function buildTableFrame()
     $("#tableContainer").append(tableFrame)
 }
 
+function getTableBody(teams)
+{
+    let str;
+    $.each(teams, (index, team) => {
+      str =         `<tr>
+                        <td>${team.TeamName}</td>
+                        <td>${team.League}</td>
+                        <td>${team.Members.length}</td>
+                        <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
+                        </td>                        
+                        <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
+                        </td>
+                    </tr>`;
+      $("#tableBody").append(str);
+    });
+    addRegBtn();
+}
+
+
+// Helper function that generates a register button after the data table
 function addRegBtn()
 {
     $("#regBtn").remove();
@@ -136,6 +202,6 @@ function addRegBtn()
             .attr("class", "btn btn-outline-success")
             .attr("href", "register.html")
             .attr("id", "regBtn")
-            .text("Register")
+            .text("Register a Team")
     )
 }
