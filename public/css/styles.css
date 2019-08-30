@@ -13,3 +13,22 @@ img {
     width: 50%;
     margin-left: 25%;
 }
+
+#registrationForm
+{
+    padding:3%;
+    width: 50%;
+    margin-left:25%;
+}
+
+.hidden
+{
+    display: none;
+}
+
+#detailsForm
+{
+    padding: 3%;
+    width: 65%;
+    background-color: cornsilk;
+}
