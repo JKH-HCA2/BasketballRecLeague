@@ -21,6 +21,7 @@ $(function()
         objs = data
 
         // Strings are created for every type of information pulled from the json file
+        $("#teamId").val(objs.TeamId)
         $("#teamNameInput").val(objs.TeamName)
         $("#leagueInput").val(objs.League)
         $("#managerNameInput").val(objs.ManagerName)
@@ -48,8 +49,32 @@ $(function()
     // Button is created dynamically to populate the course ID field on the registration page with data in the URL
     let regBtn = "<a class='btn btn-outline-primary mr-1 mt-4' id='registerBtn' href=register.html?teamid=" + teamId + ">Register</a>"
     $("#detailBtnGroup").append(regBtn)
-    let editBtn = "<a class='btn btn-outline-warning mr-1 ml-1 mt-4' id='editBtn' href=edit.html?teamid=" + teamId + ">Edit</a>"
-    $("#detailBtnGroup").append(editBtn)
-    let cancelBtn = "<a class='btn btn-outline-danger ml-1 mt-4' id='cancelBtn' href=courses.html>Cancel</a>"
-    $("#detailBtnGroup").append(cancelBtn)
+    let editBtn = "<button type='button' class='btn btn-outline-warning mr-1 ml-1 mt-2' id='editBtn'>Edit</button>"
+    $("#detailsForm").append(editBtn)
+    let backBtn = "<a class='btn btn-outline-danger ml-1 mt-4' id='cancelBtn' href=teams.html>Back to Teams</a>"
+    $("#detailBtnGroup").append(backBtn)
+
+    $("#editBtn").on("click", function()
+    {
+        $("#successDiv").hide()
+        $("#saveChanges").remove();
+        $("form input").attr("readonly", false)
+        let saveBtn = `<button type="button" class="btn btn-outline-success mr-1 ml-1 mt-2" id="saveChanges">Save Changes</button>`
+        $("#detailsForm").append(saveBtn)
+        $("#saveChanges").on("click", function()
+        {
+            $.ajax({
+                url: '/api/teams',
+                data: $("#detailsForm").serialize(),
+                method: 'PUT',
+                success: function()
+                {
+                    $("#successDiv").show();
+                    //document.location.href = "courses.html?instr=" + $.urlParam('instr');
+                }
+            })
+            $("form input").attr("readonly", true)
+            $("#saveChanges").remove();
+        })
+    })
 })

@@ -84,6 +84,10 @@ function getTeamForm()
 
 function getMembForm(teamId)
 {
+    if (teamId == null)
+    {
+        teamId = "Enter a valid Team ID"
+    }
     let str = 
     `<form class='border border-primary rounded-lg' id="registrationForm">
         <h1 class='display-4 mx-auto'>Member Registration</h1>
@@ -120,8 +124,12 @@ function getMembForm(teamId)
             <input type="text" name="phone" class="form-control" id="phoneInput">
         </div>
         <button type='button' id="submitMember" class='btn btn-outline-primary'>Submit</button>
-    </form>`
+    </form>`    
     $("#formContainer").append(str)
+    if (teamId == "Enter a valid Team ID")
+    {
+        $("#teamInput").attr("readonly", false)
+    }
 }
 
 function getLeagues()
