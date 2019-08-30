@@ -8,8 +8,24 @@ $(function()
     let teamId = urlParams.get("teamid");
 
     getLeagues();
-    getMembForm(teamId);
-    $("#submitMember").on("click", sendMembData)
+
+    
+    let teamName
+    if (teamId == null)
+    {
+        getTeamForm()
+        $("#submitTeam").on("click", sendTeamData) 
+    }
+    else
+    {
+        $.getJSON("/api/teams/" + teamId, function(data) {
+            let objs = data
+            teamName = objs.TeamName
+            getMembForm(teamId, teamName);
+            $("#submitMember").on("click", sendMembData)
+        })
+    }
+    
 
     $("input[name='regType']").on("change", function()
     {
@@ -22,10 +38,12 @@ $(function()
         }
         else
         {
-            getMembForm(teamId);
+            getMembForm(teamId, teamName);
             $("#submitMember").on("click", sendMembData);
         }
     })
+
+    
 })
 
 function getTeamForm()
@@ -82,14 +100,23 @@ function getTeamForm()
     getLeagues();
 }
 
-function getMembForm(teamId)
+function getMembForm(teamId, teamName)
 {
+    if (teamId == null)
+    {
+        teamId = "Enter a valid Team ID"
+    }
+    
     let str = 
     `<form class='border border-primary rounded-lg' id="registrationForm">
         <h1 class='display-4 mx-auto'>Member Registration</h1>
-        <div class="form-group">
+        <div class="form-group hidden">
             <label for="teamInput">Desired Team</label>
             <input readonly type="text" value="${teamId}" class="form-control" id="teamInput">
+        </div>
+        <div class="form-group">
+            <label for="teamInput">Desired Team</label>
+            <input readonly type="text" value="${teamName}" class="form-control" id="teamInput">
         </div>
         <div class="form-group">
             <label for="emailInput">Email Address</label>
@@ -120,8 +147,12 @@ function getMembForm(teamId)
             <input type="text" name="phone" class="form-control" id="phoneInput">
         </div>
         <button type='button' id="submitMember" class='btn btn-outline-primary'>Submit</button>
-    </form>`
+    </form>`    
     $("#formContainer").append(str)
+    if (teamId == "Enter a valid Team ID")
+    {
+        $("#teamInput").attr("readonly", false)
+    }
 }
 
 function getLeagues()
