@@ -25,3 +25,10 @@ img {
 {
     display: none;
 }
+
+#detailsForm
+{
+    padding: 3%;
+    width: 65%;
+    background-color: cornsilk;
+}

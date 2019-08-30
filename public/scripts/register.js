@@ -2,8 +2,13 @@
 
 $(function()
 {
+    // var stores the url params in a variable
+    let urlParams = new URLSearchParams(location.search);
+    // courseid is parsed from the url and stored in a variable
+    let teamId = urlParams.get("teamid");
+
     getLeagues();
-    getMembForm();
+    getMembForm(teamId);
     $("#submitMember").on("click", sendMembData)
 
     $("input[name='regType']").on("change", function()
@@ -13,12 +18,12 @@ $(function()
         if (selected == "Team")
         {                        
             getTeamForm();
-            $("#submitTeam").on("click", sendTeamData)
+            $("#submitTeam").on("click", sendTeamData) 
         }
         else
         {
-            getMembForm();
-            $("#submitMember").on("click", sendMembData)
+            getMembForm(teamId);
+            $("#submitMember").on("click", sendMembData);
         }
     })
 })
@@ -77,11 +82,15 @@ function getTeamForm()
     getLeagues();
 }
 
-function getMembForm()
+function getMembForm(teamId)
 {
     let str = 
     `<form class='border border-primary rounded-lg' id="registrationForm">
         <h1 class='display-4 mx-auto'>Member Registration</h1>
+        <div class="form-group">
+            <label for="teamInput">Desired Team</label>
+            <input readonly type="text" value="${teamId}" class="form-control" id="teamInput">
+        </div>
         <div class="form-group">
             <label for="emailInput">Email Address</label>
             <input type="text" name="email" class="form-control" id="emailInput">
@@ -140,13 +149,9 @@ function sendTeamData()
     return false;
 }
 
-function sendMembData()
+function sendMembData(teamId)
 {
-    // var stores the url params in a variable
-    let urlParams = new URLSearchParams(location.search);
-    // courseid is parsed from the url and stored in a variable
-    let teamId = urlParams.get("teamid");
-
+    
     $.post(`/api/teams/${teamId}/members`, $("#registrationForm").serialize(),
     function(data)
     {
