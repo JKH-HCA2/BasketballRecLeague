@@ -3,6 +3,8 @@
 $(function()
 {
     getLeagues();
+    getMembForm();
+    $("#submitMember").on("click", sendMembData)
 
     $("input[name='regType']").on("change", function()
     {
@@ -19,10 +21,6 @@ $(function()
             $("#submitMember").on("click", sendMembData)
         }
     })
-
-
-
-
 })
 
 function getTeamForm()
@@ -101,14 +99,14 @@ function getMembForm()
             <input type="number" name="age" class="form-control" id="ageInput">
         </div>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary">
-                <input type="radio" name="gender" id="male" value="Male" autocomplete="off"> Male
+            <label class="btn btn-secondary mt-2">
+                <input type="radio" name="gender" value="Male" autocomplete="off"> Male
             </label>
-            <label class="btn btn-secondary">
-                <input type="radio" name="gender" id="female" value="Female" autocomplete="off"> Female
+            <label class="btn btn-secondary mt-2">
+                <input type="radio" name="gender" value="Female" autocomplete="off"> Female
             </label>
         </div>
-        <div class="form-group">
+        <div class="form-group mt-3">
             <label for="phoneInput">Phone Number</label>
             <input type="text" name="phone" class="form-control" id="phoneInput">
         </div>
@@ -138,6 +136,21 @@ function sendTeamData()
     {
         data = JSON.parse(data);
         location.href = "details.html?teamid=" + data.TeamId;
+    })
+    return false;
+}
+
+function sendMembData()
+{
+    // var stores the url params in a variable
+    let urlParams = new URLSearchParams(location.search);
+    // courseid is parsed from the url and stored in a variable
+    let teamId = urlParams.get("teamid");
+
+    $.post(`/api/teams/${teamId}/members`, $("#registrationForm").serialize(),
+    function(data)
+    {
+        location.href = "details.html?teamid=" + teamId;
     })
     return false;
 }
