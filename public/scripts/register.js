@@ -117,6 +117,12 @@ function memberFormValidation(objs) {
 	let phoneTest = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
 
 	let isok = true;
+
+	if (objs.Members.length = objs.MaxTeamMembers) {
+		$("#teamFullDiv").show()
+		isok = false;
+	}
+	
 	let userEmail = $.trim($("#emailInput").val());
 	if (userEmail == "") {
 		$("#emailWarningDiv").show();
@@ -188,6 +194,9 @@ function teamFormValidation(objs)
 	let phoneTest = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
 
 	let isok = true;
+
+	
+
 	let teamName = $.trim($("#teamNameInput").val());
 	if (teamName == "") {
 		$("#teamNameWarningDiv").show();
@@ -197,8 +206,57 @@ function teamFormValidation(objs)
 		isok = false;
 	}
 
-	if (checkDropdown() == false) {
+	if (checkLeagueDropdown() == false) {
 		$("#leagueWarningDiv").show();
+		isok = false;
+	}
+
+	let managerName = $.trim($("#managerNameInput").val());
+	if (managerName == "") {
+		$("#managerNameWarningDiv").show();
+		isok = false;
+	} else if (nameTest.test(managerName) == false) {
+		$("#managerNameWarningDiv").show();
+		isok = false;
+	}
+
+	let managerPhone = $.trim($("#phoneInput").val())
+	if (managerPhone == "") {
+		$("#managerPhoneWarningDiv").show();
+		isok = false;
+	} else if (phoneTest.test(managerPhone) == false) {
+		$("#managerPhoneWarningDiv").show();
+		isok = false;
+	}
+
+	let managerEmail = $.trim($("#managerEmailInput").val());
+	if (managerEmail == "") {
+		$("#managerEmailWarningDiv").show();
+		isok = false;
+	} else if (emailTest.test(managerEmail) == false) {
+		$("#managerEmailWarningDiv").show();
+		isok = false;
+	}
+
+	let minInputAge = Number($.trim($("#minAge").val()));
+	if (minInputAge == "" || minInputAge < 0 || minInputAge > 100 || minInputAge > maxInputAge) {
+		$("#minAgeWarningDiv").show();
+		isok = false;
+	}
+	let maxInputAge = Number($.trim($("#maxAge").val()));
+	if (maxInputAge == "" || maxInputAge < 0 || maxInputAge > 100 || maxInputAge < minInputAge) {
+		$("#maxAgeWarningDiv").show();
+		isok = false;
+	}
+
+	let maxMembers = $.trim($("#maxMembers").val())
+	if (maxMembers < 5 || maxMembers > 15 ) {
+		$("#maxMembersWarningDiv").show()
+		isok = false;
+	}
+
+	if (checkGenderDropdown() == false) {
+		$("#genderSelectWarningDiv").show();
 		isok = false;
 	}
 
@@ -210,7 +268,12 @@ function checkRadioBtn() {
 	return $("input[type=radio]:checked").length > 0;
 }
 
-function checkDropdown()
+function checkLeagueDropdown()
 {
 	return $("select[name='leaguecode'] option:selected").index() > 0;
+}
+
+function checkGenderDropdown()
+{
+	return $("select[name='teamgender'] option:selected").index() > 0;
 }
