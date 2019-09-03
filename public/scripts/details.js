@@ -37,7 +37,9 @@ $(function()
         {
             for (let i = 0; i < len;i++)
             {
-                let str = "<tr><td>" + objs.Members[i].MemberName + "</td><td>" + objs.Members[i].Email + "</td></tr>"
+                let str = `<tr><td class="align-middle">${objs.Members[i].MemberName}</td><td class="align-middle">${objs.Members[i].Email}</td><td><a role="button" href="playerdetails.html?teamid=${objs.TeamId}&membid=${objs.Members[i].MemberId}" class="btn btn-outline-danger">
+                Edit
+              </a></td></tr>`
                 $("#memberTableBody").append(str)
             }
         }
@@ -48,23 +50,10 @@ $(function()
     })
     // Button is created dynamically to populate the course ID field on the registration page with data in the URL
     let regBtn = "<a class='btn btn-outline-primary mr-1 mt-4' id='registerBtn' href=register.html?teamid=" + teamId + ">Register</a>"
-    $("#detailBtnGroup").append(regBtn)
-
-
-    $("#registerBtn").on("click", function()
-    {
-        location.href = 'register.html?teamid=' + teamId + '&typereg=team'       
-    })
-
-
-    let editBtn = "<button type='button' class='btn btn-outline-warning mr-1 ml-1 mt-2' id='editBtn'>Edit</button>"
-    $("#detailsForm").append(editBtn)
-    let backBtn = "<a class='btn btn-outline-danger ml-1 mt-4' id='cancelBtn' href=teams.html>Back to Teams</a>"
-    $("#detailBtnGroup").append(backBtn)
+    $("#detailBtnGroup").prepend(regBtn)
 
     $("#editBtn").on("click", function()
     {
-        $("#successDiv").hide()
         $("#saveChanges").remove();
         $("form input").attr("readonly", false)
         let saveBtn = `<button type="button" class="btn btn-outline-success mr-1 ml-1 mt-2" id="saveChanges">Save Changes</button>`
@@ -77,7 +66,6 @@ $(function()
                 method: 'PUT',
                 success: function()
                 {
-                    $("#successDiv").show();
                     //document.location.href = "courses.html?instr=" + $.urlParam('instr');
                 }
             })

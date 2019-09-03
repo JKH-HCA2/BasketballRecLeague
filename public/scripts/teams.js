@@ -137,7 +137,6 @@ function buildTableFrame()
                                         <th>Team League</th>
                                         <th>Number of Members</th>
                                         <th>Details</th>
-                                        <th>Edit</th>
                                     <tr>
                                 </thead> 
                                 <tbody id='tableBody'> 
@@ -154,8 +153,6 @@ function getTableBody(team)
                         <td>${team.Members.length}</td>
                         <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
                         </td>                        
-                        <td><a role='button' class='btn btn-outline-danger' href='edit.html?teamid=${team.TeamId}' >Edit</a>
-                        </td>
                     </tr>`;
     $("#tableBody").append(str);
 }
