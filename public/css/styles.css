@@ -14,12 +14,14 @@ img {
     margin-left: 25%;
 }
 
-#registrationForm
+.registrationForm
 {
     padding:3%;
     width: 50%;
     margin-left:25%;
 }
+
+
 
 .hidden
 {
