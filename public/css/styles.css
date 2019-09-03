@@ -19,6 +19,7 @@ img {
     padding:3%;
     width: 50%;
     margin-left:25%;
+    background-color: cornsilk;
 }
 
 
@@ -33,4 +34,10 @@ img {
     padding: 3%;
     width: 65%;
     background-color: cornsilk;
+}
+
+.warning-div
+{
+    background-color: mistyrose;
+    color: red;
 }
