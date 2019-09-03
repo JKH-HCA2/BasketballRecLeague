@@ -43,24 +43,31 @@
             <form id="formSelector">
                 <div class="btn-group btn-group-toggle" id="radioGrp" data-toggle="buttons">
                     <label class="btn btn-secondary">
-                        <input type="radio" name="regType" id="regTeam" value="Team" autocomplete="off"> Team
+                        <input type="radio" name="regType" id="regTeam" value="Team"> Team
                     </label>
                     <label class="btn btn-secondary">
-                        <input type="radio" name="regType" id="regMember" value="Member" autocomplete="off"> Member
+                        <input type="radio" name="regType" id="regMember" value="Member"> Member
                     </label>
                 </div>
             </form>
-            <form class='border border-primary rounded-lg mb-5 registrationForm' id="teamRegForm">
+            <form class='border border-dark rounded-lg mb-5 registrationForm' id="teamRegForm">
                 <h1 class='display-4 mx-auto'>Team Registration</h1>
                 <div class="form-group">
                     <label for="teamNameInput">Team Name</label>
-                    <input type="text" name="teamname" class="form-control" id="teamNameInput">
+                    <input type="text" name="teamname" maxlength="25" class="form-control" id="teamNameInput">
                 </div>
+                <div id='teamNameWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid Team Name</p>
+                    <p class="mb-0">Team Name must be between 5 and 30 characters</p>
+                </div>                
                 <div class="form-group">
                     <label for="leagueSelector">League</label>
                     <select name="leaguecode" id="leagueSelector" class="custom-select">
                         <option disabled selected>Select a League</option>
                     </select>
+                </div>
+                <div id='leagueWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please select a league</p>
                 </div>
                 <div class="form-group">
                     <label for="managerNameInput">Manager Name</label>
@@ -97,7 +104,7 @@
                 </div>
                 <button type='button' id="submitTeam" class='btn btn-outline-primary'>Submit</button>
             </form>
-            <form class='border border-primary rounded-lg registrationForm' id="membRegForm">
+            <form class='border border-dark rounded-lg registrationForm mb-5' id="membRegForm">
                 <h1 class='display-4 mx-auto'>Member Registration</h1>
                 <div class="form-group hidden">
                     <label for="teamInputId">Team ID</label>
@@ -107,35 +114,58 @@
                     <label for="teamName">Desired Team</label>
                     <input readonly type="text" class="form-control" id="teamName">
                 </div>
+                <div id='teamWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Select a Team from the Team Search page to register <a href='teams.html'>Here</a></p>
+                </div>
                 <div class="form-group">
                     <label for="emailInput">Email Address</label>
                     <input type="text" name="email" class="form-control" id="emailInput">
+                </div>
+                <div id='emailWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid email Adress</p>
                 </div>
                 <div class="form-group">
                     <label for="nameInput">Member Name</label>
                     <input type="text" name="membername" class="form-control" id="nameInput">
                 </div>
+                <div id='nameWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid Name</p>
+                </div>
                 <div class="form-group">
                     <label for="contactNameInput">Contact Name</label>
                     <input type="text" name="contactname" class="form-control" id="contactNameInput">
+                </div>
+                <div id='contactWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid Contact Name</p>
                 </div>
                 <div class="form-group">
                     <label for="ageInput">Age</label>
                     <input type="number" name="age" class="form-control" id="ageInput">
                 </div>
+                <div id='ageWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid Age</p>
+                </div>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-secondary mt-2">
-                        <input type="radio" name="gender" value="Male" autocomplete="off"> Male
+                        <input type="radio" name="gender" value="Male"> Male
                     </label>
                     <label class="btn btn-secondary mt-2">
-                        <input type="radio" name="gender" value="Female" autocomplete="off"> Female
+                        <input type="radio" name="gender" value="Female"> Female
                     </label>
+                </div>
+                <div id='genderWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please select a gender</p>
                 </div>
                 <div class="form-group mt-3">
                     <label for="phoneInput">Phone Number</label>
                     <input type="text" name="phone" class="form-control" id="phoneInput">
                 </div>
+                <div id='phoneWarningDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                    <p class="mb-0">Please enter a valid Phone Number</p>
+                </div>
                 <button type='button' id="submitMember" class='btn btn-outline-primary'>Submit</button>
+
+                <div id='WarningDiv' class='align-middle hidden mt-3 p-2 border border-danger rounded-lg'></div>
             </form>
             
 

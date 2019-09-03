@@ -6,8 +6,8 @@
     "ManagerName": "Steve Kerr",
     "ManagerPhone": "555-000-0000",
     "ManagerEmail": "Stevekerr@aol.com",
-    "MinMemberAge": 0,
-    "MaxMemberAge": 100,
+    "MinMemberAge": 18,
+    "MaxMemberAge": 35,
     "MaxTeamMembers": 7,
     "TeamGender": "Any",
     "Members": [

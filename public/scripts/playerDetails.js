@@ -9,25 +9,22 @@ $(function()
     let membId = urlParams.get("membid")
 
     let objs
-    $.getJSON(`/api/teams/${teamId}/members/${membId}`, function(data)
-    {
-        objs = data;
+    $.getJSON(`/api/teams/${teamId}/members/${membId}`, function(data) {
+      objs = data;
+      postData(objs);
+    });
 
-        $("#memberIdInput").val(objs.MemberId);
-        $("#emailInput").val(objs.Email);
-        $("#phoneInput").val(objs.Phone);
-        $("#memberNameInput").val(objs.MemberName);
-        $("#contactNameInput").val(objs.ContactName);
-        $("#playerAge").val(objs.Age);
-        $("#genderInput").val(objs.Gender);
+    $("#resetChanges").on("click", function()
+    {
+        postData(objs);
     })
+
 
     $("#editPlayerBtn").on("click", function()
     {
-        $("#saveChanges").remove();
+        $("#saveChanges").show();
+        $("#resetChanges").show();
         $("form input").attr("readonly", false)
-        let saveBtn = `<button type="button" class="btn btn-outline-success mr-1 ml-1 mt-2" id="saveChanges">Save Changes</button>`
-        $("#detailsForm").append(saveBtn)
         $("#saveChanges").on("click", function()
         {
             $.ajax({
@@ -40,8 +37,19 @@ $(function()
                 }
             })
             $("form input").attr("readonly", true)
-            $("#saveChanges").remove();
+            $("#saveChanges").hide();
+            $("#resetChanges").hide();
         })
     })
 
 })
+
+function postData(objs) {
+  $("#memberIdInput").val(objs.MemberId);
+  $("#emailInput").val(objs.Email);
+  $("#phoneInput").val(objs.Phone);
+  $("#memberNameInput").val(objs.MemberName);
+  $("#contactNameInput").val(objs.ContactName);
+  $("#playerAge").val(objs.Age);
+  $("#genderInput").val(objs.Gender);
+}
