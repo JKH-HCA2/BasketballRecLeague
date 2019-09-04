@@ -26,7 +26,7 @@ function getFilter()
     else {
         let str = `<div id="searchFilter">
                         <label for="filter">${selected}:</label>
-                        <select class="selectors custom-select" id="filter">
+                        <select class="selectors mt-2 custom-select" id="filter">
                             <option selected disabled>Choose One</option>
                         </select>
                     </div>`
@@ -130,13 +130,13 @@ function getDataByMems()
 // Helper function that builds the table, table header, and table body
 function buildTableFrame()
 {
-    let tableFrame = `<table class='table text-center table-hover table-bordered mt-5' id='dataTable'>
-                                <thead id='tableHead'>
+    let tableFrame = `<table class='table table-responsive table-hover text-center table-light table-bordered mt-3' id='dataTable'>
+                                <thead class='thead-dark' id='tableHead'>
                                     <tr>   
-                                        <th>Team Name</th> 
-                                        <th>Team League</th>
-                                        <th>Number of Members</th>
-                                        <th>Details</th>
+                                        <th class='align-middle'>Team Name</th> 
+                                        <th class='align-middle'>Team League</th>
+                                        <th class='align-middle'>Number of Members</th>
+                                        <th class='align-middle'>Details</th>
                                     <tr>
                                 </thead> 
                                 <tbody id='tableBody'> 
@@ -148,10 +148,10 @@ function buildTableFrame()
 function getTableBody(team)
 {
     let str =         `<tr>
-                        <td>${team.TeamName}</td>
-                        <td>${team.League}</td>
-                        <td>${team.Members.length}</td>
-                        <td><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
+                        <td class='align-middle'>${team.TeamName}</td>
+                        <td class='align-middle'>${team.League}</td>
+                        <td class='align-middle'>${team.Members.length}</td>
+                        <td class='align-middle'><a role='button' class='btn btn-outline-primary' href='details.html?teamid=${team.TeamId}' >Details</a>
                         </td>                        
                     </tr>`;
     $("#tableBody").append(str);
@@ -165,7 +165,7 @@ function addRegBtn()
     $("#tableContainer").append(
         $("<a />")
             .attr("role", "button")
-            .attr("class", "btn btn-outline-success")
+            .attr("class", "btn btn-success")
             .attr("href", "register.html")
             .attr("id", "regBtn")
             .text("Register a Team")

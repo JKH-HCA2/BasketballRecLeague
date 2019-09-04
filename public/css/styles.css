@@ -5,20 +5,13 @@ img {
 
 .selectors
 {
-    width:20%;
-}
-
-#tableContainer
-{
-    width: 50%;
-    margin-left: 25%;
+    width:50%;
 }
 
 .registrationForm
 {
     padding:3%;
     width: 50%;
-    margin-left:25%;
     background-color: cornsilk;
 }
 
@@ -41,3 +34,39 @@ img {
     background-color: mistyrose;
     color: red;
 }
+
+.stop-warning {
+    background-color: mistyrose;
+    color: red;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background-image: url("../images/backgroundpattern.png");
+}
+
+#dataDisplay {
+    width: 50%;
+    background-color: cornsilk;
+}
+
+#myNav {
+    background-color: cornsilk;
+}
+
+.card-body {
+    background-color: cornsilk;
+}
+
+@media only screen and (max-width: 1080px) {
+    #dataDisplay {
+        width: 90%;
+    }
+    #detailsForm {
+        width: 90%;
+    }
+    .registrationForm {
+        width: 100%;
+    }
+}
+  
