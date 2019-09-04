@@ -10,10 +10,11 @@
 
     <title>BBall Rec League</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
   </head>
   <body>
         <header>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav id="myNav" class="navbar navbar-expand-lg navbar-light border-bottom border-dark">
                 <a class="navbar-brand" href="#">BBall Rec</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,19 +36,22 @@
             </nav>
         </header>
         <main>
-            <div id="lookupContainer" class="container-fluid mt-2">
-                <label for="searchBy">Search By:</label>
-                <select id="searchBy" name="searchBy" class="selectors custom-select">
-                    <option selected disabled>Choose a filter</option>
-                    <option value="League">League</option>
-                    <option value="Team">Team</option>
-                    <option value="Number of Members"># of Team Members</option>
-                    <option value="All">View All</option>
-                </select>
-            </div>
-            <div id="tableContainer" class="container-fluid">
+            <div class="text-center container-fluid border border-dark p-5 rounded-lg mx-auto mt-5" id="dataDisplay">
+                <h1 class="display-4">Team Lookup</h1>
+                <div id="lookupContainer" class="container-fluid mt-4">
+                    <label for="searchBy">Search By:</label>
+                    <select id="searchBy" name="searchBy" class="selectors custom-select">
+                        <option selected disabled>Choose a filter</option>
+                        <option value="League">League</option>
+                        <option value="Team">Team</option>
+                        <option value="Number of Members"># of Team Members</option>
+                        <option value="All">View All</option>
+                    </select>
+                </div>
+                <div id="tableContainer" class="container-fluid">
 
-            </div>
+                </div>
+            </div>    
         </main>
 
     <!-- Optional JavaScript -->

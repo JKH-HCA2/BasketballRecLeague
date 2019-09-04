@@ -19,36 +19,36 @@ $(function () {
 		$("#membRegForm").hide();
 		$("#teamRegForm").show();
 		
-	} else {
-		$.getJSON(`/api/teams/${teamId}`, function (data) {
-			objs = data;
-			let teamName = objs.TeamName;
-			$("#teamName").val(teamName);
+	} 
+		
+	$.getJSON(`/api/teams/${teamId}`, function (data) {
+		objs = data;
+		let teamName = objs.TeamName;
+		$("#teamName").val(teamName);
 
-			$("#membRegForm").show();
-			$("#teamRegForm").hide();
+		$("#membRegForm").show();
+		$("#teamRegForm").hide();
 
-			// Dynamic Error Messages
-			let error = `<p class="mb-0">Age must be between ${objs.MinMemberAge} and ${objs.MaxMemberAge}</p>`;
-			$("#ageWarningDiv").append(error)
-			if (objs.TeamGender == "Male" || objs.TeamGender == "Female")
-			{
-				error = `<p class="mb-0">The selected team is ${objs.TeamGender} only</p>`
-				$("#genderWarningDiv").append(error)
-			}
-		});
+		// Dynamic Error Messages
+		let error = `<p class="mb-0">Age must be between ${objs.MinMemberAge} and ${objs.MaxMemberAge}</p>`;
+		$("#ageWarningDiv").append(error)
+		if (objs.TeamGender == "Male" || objs.TeamGender == "Female") {
+			error = `<p class="mb-0">The selected team is ${objs.TeamGender} only</p>`
+			$("#genderWarningDiv").append(error)
+		}
 
-		$("#submitMember").on("click", function () {
-			$(".warning-div").hide();
-			sendMembData(objs);
-		});
-		$("#submitTeam").on("click", function()
-		{
-			$(".warning-div").hide();
-			sendTeamData(objs);			
-		});
-	}
-
+		
+	});
+	$("#submitMember").on("click", function () {
+		$(".warning-div").hide();
+		sendMembData(objs);
+	});
+	$("#submitTeam").on("click", function()
+	{
+		$(".warning-div").hide();
+		sendTeamData(objs);			
+	});		
+	
 	
 
 	$("teamInput").val(teamId);
@@ -84,7 +84,7 @@ function sendTeamData(objs) {
 	}
 
 	// Data from the add course form is posted to the server
-	$.post("/api/teams", $("#registrationForm").serialize(), function (data) {
+	$.post("/api/teams", $("#teamRegForm").serialize(), function (data) {
 		data = JSON.parse(data);
 		location.href = "details.html?teamid=" + data.TeamId;
 	});
@@ -103,7 +103,7 @@ function sendMembData(objs) {
 
 	$.post(
 		`/api/teams/${teamId}/members`,
-		$("#registrationForm").serialize(),
+		$("#membRegForm").serialize(),
 		function (data) {
 			location.href = "details.html?teamid=" + teamId;
 		}
@@ -117,12 +117,11 @@ function memberFormValidation(objs) {
 	let phoneTest = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
 
 	let isok = true;
-
-	if (objs.Members.length = objs.MaxTeamMembers) {
+	if (objs.Members.length == objs.MaxTeamMembers) {
 		$("#teamFullDiv").show()
-		isok = false;
+		$("#submitMember").prop("disabled", true)
 	}
-	
+
 	let userEmail = $.trim($("#emailInput").val());
 	if (userEmail == "") {
 		$("#emailWarningDiv").show();
@@ -131,7 +130,7 @@ function memberFormValidation(objs) {
 		$("#emailWarningDiv").show();
 		isok = false;
 	}
-
+	
 	let userName = $.trim($("#nameInput").val());
 	if (userName == "") {
 		$("#nameWarningDiv").show();
