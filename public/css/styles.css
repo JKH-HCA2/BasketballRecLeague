@@ -2,6 +2,18 @@ img {
     max-width: 100%;
     max-height: 100%;
 }
+body {
+    font-family: 'Raleway', sans-serif;
+    background-image: url("../images/backgroundpattern.png");
+}
+th {
+    width: 100%;
+}
+
+.hidden
+{
+    display: none;
+}
 
 .selectors
 {
@@ -13,13 +25,6 @@ img {
     padding:3%;
     width: 50%;
     background-color: cornsilk;
-}
-
-
-
-.hidden
-{
-    display: none;
 }
 
 #detailsForm
@@ -34,32 +39,32 @@ img {
     background-color: mistyrose;
     color: red;
 }
-
 .stop-warning {
     background-color: mistyrose;
     color: red;
 }
 
-body {
-    font-family: 'Raleway', sans-serif;
-    background-image: url("../images/backgroundpattern.png");
-}
+
 
 #dataDisplay {
     width: 60%;
     background-color: cornsilk;
 }
 
-th {
-    width: 100%;
-}
+
 
 #myNav {
     background-color: cornsilk;
 }
 
 .card-body {
-    background-color: cornsilk;
+    background-color: white;
+}
+
+.carousel-label {
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 3px 2px black;
 }
 
 @media only screen and (max-width: 1080px) {

@@ -1,15 +1,24 @@
 "use strict";
 
+/*
+*
+* Function: Anonymous function that readies the JavaScript on-page-load
+*
+* Author: Jeremy Han
+*
+*/
 $(function () {
 	// var stores the url params in a variable
 	let urlParams = new URLSearchParams(location.search);
 	// courseid is parsed from the url and stored in a variable
 	let teamId = urlParams.get("teamid");
+	let leagueId = urlParams.get("leagueid")
 
-	getLeagues();
-
+	// Populates the leagues dropdown with the leagues in the JSON file
+	getLeagues(leagueId);
 	let objs;
 	
+	// Determines which form to start the user on based on which register button they selected
 	if (teamId == null) {
 		$("#membRegForm input").attr("readonly", true);
 		$("input[name='gender']").prop("disabled", true);
@@ -19,26 +28,26 @@ $(function () {
 		$("#membRegForm").hide();
 		$("#teamRegForm").show();
 		
-	} 
-		
-	$.getJSON(`/api/teams/${teamId}`, function (data) {
-		objs = data;
-		let teamName = objs.TeamName;
-		$("#teamName").val(teamName);
-
+	} else {
 		$("#membRegForm").show();
 		$("#teamRegForm").hide();
 
-		// Dynamic Error Messages
-		let error = `<p class="mb-0">Age must be between ${objs.MinMemberAge} and ${objs.MaxMemberAge}</p>`;
-		$("#ageWarningDiv").append(error)
-		if (objs.TeamGender == "Male" || objs.TeamGender == "Female") {
-			error = `<p class="mb-0">The selected team is ${objs.TeamGender} only</p>`
-			$("#genderWarningDiv").append(error)
-		}
+		$.getJSON(`/api/teams/${teamId}`, function (data) {
+			objs = data;
+			let teamName = objs.TeamName;
+			$("#teamName").val(teamName);
+	
+			// Dynamic Error Messages
+			let error = `<p class="mb-0">Age must be between ${objs.MinMemberAge} and ${objs.MaxMemberAge}</p>`;
+			$("#ageWarningDiv").append(error)
+			if (objs.TeamGender == "Male" || objs.TeamGender == "Female") {
+				error = `<p class="mb-0">The selected team is ${objs.TeamGender} only</p>`
+				$("#genderWarningDiv").append(error)
+			}		
+		})
+	}
 
-		
-	});
+	// Button block readies both submit buttons on the registration forms
 	$("#submitMember").on("click", function () {
 		$(".warning-div").hide();
 		sendMembData(objs);
@@ -46,13 +55,10 @@ $(function () {
 	$("#submitTeam").on("click", function()
 	{
 		$(".warning-div").hide();
-		sendTeamData(objs);			
+		sendTeamData();			
 	});		
-	
-	
 
-	$("teamInput").val(teamId);
-
+	// Dynamically changes which form displays based on which radio option is selected
 	$("input[name='regType']").on("change", function () {
 		let selected = $("input[name='regType']:checked", "#formSelector").val();
 		if (selected == "Team") {
@@ -65,7 +71,8 @@ $(function () {
 	});
 });
 
-function getLeagues() {
+// Helper function that populates the leagues dropdown with the leagues from the JSON file
+function getLeagues(leagueId) {
 	$.getJSON("/api/leagues", leagues => {
 		$.each(leagues, (index, league) => {
 			$("#leagueSelector").append(
@@ -74,9 +81,15 @@ function getLeagues() {
 					.attr("value", league.Name)
 			);
 		});
+		if (leagueId == "D4") {
+			let selected = "Division Four"
+			$("#leagueSelector").val(selected)
+		}
 	});
+	
 }
 
+// Helper function that posts user data to the server
 function sendTeamData() {
 	let isok = teamFormValidation()
 	if (isok == false) {
@@ -91,6 +104,7 @@ function sendTeamData() {
 	return false;
 }
 
+// Helper function that posts user data to the server
 function sendMembData(objs) {
 	let isok = memberFormValidation(objs);
 	if (isok == false) {
@@ -111,6 +125,7 @@ function sendMembData(objs) {
 	return false;
 }
 
+// Helper function validates whether user data is valid on the member registration form
 function memberFormValidation(objs) {
 	let emailTest = /^([a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})){1}(;[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,}))*$/;
 	let nameTest = /^([a-zA-Z]+[\'\,\.\-]?[a-zA-Z ]*)+[ ]([a-zA-Z]+[\'\,\.\-]?[a-zA-Z ]+)+$/;
@@ -186,6 +201,7 @@ function memberFormValidation(objs) {
 	return isok;
 }
 
+// Helper function determines if user data is valid on the team registration form
 function teamFormValidation()
 {
 	let emailTest = /^([a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})){1}(;[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,}))*$/;
@@ -236,11 +252,11 @@ function teamFormValidation()
 	}
 
 	let minInputAge = Number($.trim($("#minAge").val()));
+	let maxInputAge = Number($.trim($("#maxAge").val()));
 	if (minInputAge == "" || minInputAge < 0 || minInputAge > 100 || minInputAge > maxInputAge) {
 		$("#minAgeWarningDiv").show();
 		isok = false;
 	}
-	let maxInputAge = Number($.trim($("#maxAge").val()));
 	if (maxInputAge == "" || maxInputAge < 0 || maxInputAge > 100 || maxInputAge < minInputAge) {
 		$("#maxAgeWarningDiv").show();
 		isok = false;
@@ -259,15 +275,18 @@ function teamFormValidation()
 	return isok;
 }
 
+// Helper function determines if the gender dropdown was used
 function checkRadioBtn() {
 	return $("input[type=radio]:checked").length > 0;
 }
 
+// Helper function determines if the league dropdown was used
 function checkLeagueDropdown()
 {
 	return $("select[name='leaguecode'] option:selected").index() > 0;
 }
 
+// Helper function determines if the gender radio was used
 function checkGenderDropdown()
 {
 	return $("select[name='teamgender'] option:selected").index() > 0;
