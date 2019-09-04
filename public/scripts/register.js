@@ -77,8 +77,8 @@ function getLeagues() {
 	});
 }
 
-function sendTeamData(objs) {
-	let isok = teamFormValidation(objs)
+function sendTeamData() {
+	let isok = teamFormValidation()
 	if (isok == false) {
 		return;
 	}
@@ -186,15 +186,13 @@ function memberFormValidation(objs) {
 	return isok;
 }
 
-function teamFormValidation(objs)
+function teamFormValidation()
 {
 	let emailTest = /^([a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,})){1}(;[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[a-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*\.([a-z]{2,}))*$/;
 	let nameTest = /^([a-zA-Z]+[\'\,\.\-]?[a-zA-Z ]*)+[ ]([a-zA-Z]+[\'\,\.\-]?[a-zA-Z ]+)+$/;
 	let phoneTest = /^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/
 
 	let isok = true;
-
-	
 
 	let teamName = $.trim($("#teamNameInput").val());
 	if (teamName == "") {
@@ -257,9 +255,7 @@ function teamFormValidation(objs)
 	if (checkGenderDropdown() == false) {
 		$("#genderSelectWarningDiv").show();
 		isok = false;
-	}
-
-	
+	}	
 	return isok;
 }
 
