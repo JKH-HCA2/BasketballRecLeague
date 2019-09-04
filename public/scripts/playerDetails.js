@@ -30,11 +30,7 @@ $(function()
             $.ajax({
                 url: `/api/teams/${teamId}/members`,
                 data: $("#detailsForm").serialize(),
-                method: 'PUT',
-                success: function()
-                {
-                    //document.location.href = "courses.html?instr=" + $.urlParam('instr');
-                }
+                method: 'PUT'
             })
             $("form input").attr("readonly", true)
             $("#saveChanges").hide();
@@ -42,6 +38,20 @@ $(function()
         })
     })
 
+
+    $("#confirmDelete").on("click", function()
+    {
+        $.ajax({
+            url: `/api/teams/${teamId}/members/${membId}`,
+            type: 'DELETE',
+            success: function() {
+                location.href = "details.html?teamid=" + teamId
+            }
+        })
+    })
+
+    let backBtn = `<a class='btn btn-secondary ml-1 mt-4' id='cancelBtn' href=details.html?teamid=${teamId}>Back to Teams</a>`
+    $("#detailBtnGroup").append(backBtn)
 })
 
 function postData(objs) {

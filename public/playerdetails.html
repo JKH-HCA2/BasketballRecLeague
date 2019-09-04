@@ -12,12 +12,14 @@
 
     <title>BBall Rec League</title>
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="icon" href="images/favicon.jpg" />
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
-            <nav id="myNav" class="navbar navbar-expand-lg navbar-light border-bottom border-dark">
+        <nav id="myNav" class="navbar navbar-expand-lg navbar-light border-bottom border-dark">
             <a class="navbar-brand" href="#">BBall Rec</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,14 +59,12 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="emailInput">Email Address</label>
-                                    <input readonly type="text" name="email" class="form-control"
-                                        id="emailInput">
+                                    <input readonly type="text" name="email" class="form-control" id="emailInput">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="phoneInput">Phone Number</label>
-                                    <input readonly type="text" name="phone" class="form-control"
-                                        id="phoneInput">
-                                </div> 
+                                    <input readonly type="text" name="phone" class="form-control" id="phoneInput">
+                                </div>
                             </div>
                             <div class="row form-group-inline">
                                 <div class="col-sm-6 form-group">
@@ -77,30 +77,56 @@
                                     <input readonly type="text" name="contactname" class="form-control"
                                         id="contactNameInput">
                                 </div>
-                                                               
+
                             </div>
                             <div class="row form-group-inline">
                                 <div class="col-sm-6 form-group">
                                     <label for="minAge">Player Age</label>
-                                    <input readonly type="number" min="0" max="100" name="age"
-                                        class="form-control" id="playerAge">
+                                    <input readonly type="number" min="0" max="100" name="age" class="form-control"
+                                        id="playerAge">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="maxAge">Gender</label>
-                                    <input readonly type="text" name="gender"
-                                        class="form-control" id="genderInput">
+                                    <input readonly type="text" name="gender" class="form-control" id="genderInput">
                                 </div>
                             </div>
-                            <button type='button' class='btn btn-outline-warning mr-1 ml-1 mt-2' id='editPlayerBtn'>Edit</button>
-                            <button type="button" class="hidden btn btn-outline-success mr-1 ml-1 mt-2" id="saveChanges">Save Changes</button>
-                            <button type="button" class="hidden btn btn-outline-danger mr-1 ml-1 mt-2" id="resetChanges">Discard Changes</button>
+                            <button type='button' class='btn btn-warning mr-1 ml-1 mt-2'
+                                id='editPlayerBtn'>Edit</button>
+                            <button type="button" class="hidden btn btn-success mr-1 ml-1 mt-2" id="saveChanges">Save
+                                Changes</button>
+                            <button type="button" class="hidden btn btn-dark mr-1 ml-1 mt-2" id="resetChanges">Discard
+                                Changes</button>
+                            <button type="button" class="btn btn-danger mr-1 ml-1 mt-2" data-toggle="modal"
+                                data-target="#deleteModal" id="deletePlayerBtn">Delete Player</button>
                         </form>
                         <div id="detailBtnGroup">
 
                         </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="modal-title" id="myModalLabel">Confirm Deletion</h2>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you wish to remove this player?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button id="confirmDelete" type="button" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </main>

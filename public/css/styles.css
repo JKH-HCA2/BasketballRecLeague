@@ -46,8 +46,12 @@ body {
 }
 
 #dataDisplay {
-    width: 50%;
+    width: 60%;
     background-color: cornsilk;
+}
+
+th {
+    width: 100%;
 }
 
 #myNav {

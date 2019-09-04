@@ -68,6 +68,16 @@ $(function()
             $("#saveChanges").hide();
         })
     })
+    $("#confirmDelete").on("click", function()
+    {
+        $.ajax({
+            url: `/api/teams/${teamId}`,
+            type: 'DELETE',
+            success: function() {
+                location.href = "teams.html"
+            }
+        })
+    })
 })
 
 function postData(objs) {
