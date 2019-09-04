@@ -1,5 +1,12 @@
 "use strict";
 
+/*
+*
+* Function: Anonymous function that readies the JavaScript on-page-load
+*
+* Author: Jeremy Han
+*
+*/
 $(function()
 {
     // var stores the url params in a variable
@@ -9,17 +16,22 @@ $(function()
     let membId = urlParams.get("membid")
 
     let objs
+    // Populates data fields with player info
     $.getJSON(`/api/teams/${teamId}/members/${membId}`, function(data) {
       objs = data;
       postData(objs);
     });
 
+    // Reverts the data fields to the mostly recently posted data by the user
     $("#resetChanges").on("click", function()
     {
-        postData(objs);
+        $.getJSON(`/api/teams/${teamId}/members/${membId}`, function(data) {
+            objs = data;
+            postData(objs);
+        })        
     })
 
-
+    // Allows the user to intuitively edit the player info within the details page
     $("#editPlayerBtn").on("click", function()
     {
         $("#saveChanges").show();
@@ -38,7 +50,7 @@ $(function()
         })
     })
 
-
+    // Modal that confirms the user wants to delete the player
     $("#confirmDelete").on("click", function()
     {
         $.ajax({
@@ -50,10 +62,12 @@ $(function()
         })
     })
 
+    // Button that returns the user to the team details page
     let backBtn = `<a class='btn btn-secondary ml-1 mt-4' id='cancelBtn' href=details.html?teamid=${teamId}>Back to Teams</a>`
     $("#detailBtnGroup").append(backBtn)
 })
 
+// Helper function that posts data from the server to the relevant data fields
 function postData(objs) {
   $("#memberIdInput").val(objs.MemberId);
   $("#emailInput").val(objs.Email);

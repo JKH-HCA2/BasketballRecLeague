@@ -20,7 +20,7 @@
 <body>
     <header>
         <nav id="myNav" class="navbar navbar-expand-lg navbar-light border-bottom border-dark">
-            <a class="navbar-brand" href="#">BBall Rec</a>
+            <a class="navbar-brand" href="index.html">BBall Rec</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -108,6 +108,9 @@
                                     <input readonly type="text" name="teamgender" class="form-control" id="genderInput">
                                 </div>
                             </div>
+                            <div id='errorDiv' class='warning-div hidden mt-3 mb-2 p-3 border border-danger rounded-lg'>
+                                <p class="mb-0">Invalid Data Entered</p>
+                            </div>
                             <button type='button' class='btn btn-warning mr-1 ml-1 mt-2' id='editBtn'>Edit</button>
                             <button type="button" class="hidden btn btn-success mr-1 ml-1 mt-2" id="saveChanges">Save
                                 Changes</button>
@@ -175,7 +178,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="scripts/details.js"></script>
-    <script src="scripts/register.js"></script>
 </body>
 
 </html>
